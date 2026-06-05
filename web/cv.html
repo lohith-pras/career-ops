@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV &amp; Lebenslauf — career-ops</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="app.css" />
+  <style>
+    .cv-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    .cv-preview {
+      background: var(--color-paper);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      font-size: var(--text-sm);
+      line-height: 1.8;
+      min-height: 400px;
+    }
+
+    .cv-preview h1 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.03em; color: var(--color-ink); font-style: normal; margin-bottom: var(--space-1); }
+    .cv-preview h2 { font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; color: var(--color-ink); font-style: normal; margin: var(--space-5) 0 var(--space-2); padding-bottom: var(--space-1); border-bottom: 1px solid var(--color-border); }
+    .cv-preview h3 { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 600; color: var(--color-ink); font-style: normal; margin: var(--space-4) 0 var(--space-1); }
+    .cv-preview p  { color: var(--color-ink-2); margin-bottom: var(--space-2); }
+    .cv-preview ul { padding-left: var(--space-5); color: var(--color-ink-2); }
+    .cv-preview li { margin-bottom: var(--space-1); }
+    .cv-preview hr { border: none; border-top: 1px solid var(--color-border); margin: var(--space-4) 0; }
+    .cv-preview code { font-family: var(--font-mono); font-size: 0.85em; background: var(--color-paper-2); padding: 1px 4px; border-radius: 3px; }
+    .cv-preview a { color: var(--color-accent); text-decoration: none; }
+    .cv-preview a:hover { text-decoration: underline; }
+    .cv-contact { font-size: var(--text-xs); color: var(--color-ink-3); font-family: var(--font-mono); margin-bottom: var(--space-4); }
+
+    .actions-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      position: sticky;
+      top: calc(var(--topbar-h) + var(--space-6));
+    }
+
+    .action-card {
+      background: var(--color-paper);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+
+    .action-card-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      color: var(--color-ink);
+      font-style: normal;
+      margin-bottom: var(--space-1);
+    }
+
+    .action-card-sub {
+      font-size: var(--text-xs);
+      color: var(--color-ink-3);
+      margin-bottom: var(--space-4);
+      line-height: 1.5;
+    }
+
+    .action-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .toggle-group {
+      display: flex;
+      border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: var(--space-2);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      font-family: var(--font-body);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--color-ink-2);
+      transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+      white-space: nowrap;
+    }
+    .toggle-btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+    .toggle-btn.active {
+      background: var(--color-accent);
+      color: oklch(100% 0 0);
+    }
+    .toggle-btn + .toggle-btn { border-left: 1px solid var(--color-border-strong); }
+
+    .deepl-status {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-ink-3);
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-paper-2);
+      border-radius: var(--radius-md);
+    }
+
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot.ok      { background: var(--color-success); }
+    .status-dot.missing { background: var(--color-warn); }
+
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--text-xs);
+      color: var(--color-ink-2);
+      font-weight: 500;
+      margin-bottom: var(--space-2);
+    }
+
+    .lang-tabs {
+      display: flex;
+      gap: var(--space-1);
+    }
+
+    .lang-tab {
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-pill);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      font-family: var(--font-mono);
+      border: none;
+      cursor: pointer;
+      background: var(--color-paper-3);
+      color: var(--color-ink-3);
+      transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+    }
+    .lang-tab:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+    .lang-tab.active {
+      background: var(--color-accent-subtle);
+      color: var(--color-accent);
+    }
+
+    @media (max-width: 768px) {
+      .cv-layout { grid-template-columns: 1fr; }
+      .actions-panel { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+
+    <nav class="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-mark" aria-hidden="true">co</div>
+        <div><div class="sidebar-brand-name">career-ops</div></div>
+      </div>
+      <div class="sidebar-nav">
+        <a href="index.html"    class="nav-item"><svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>Dashboard</a>
+        <a href="evaluate.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 8l2 2 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Evaluate</a>
+        <a href="reports.html"  class="nav-item"><svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M3 2h7l3 3v9H3V2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 2v3h3" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Reports</a>
+        <a href="cv.html"       class="nav-item" aria-current="page"><svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="12" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 5h6M5 8h6M5 11h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>CV &amp; Lebenslauf</a>
+        <div class="nav-section-label">Tools</div>
+        <a href="setup.html"    class="nav-item"><svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Settings</a>
+      </div>
+    </nav>
+
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <div class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="sidebar-toggle" onclick="openSidebar()" aria-label="Open navigation">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <span class="topbar-title">CV &amp; Lebenslauf</span>
+        </div>
+        <div class="topbar-right">
+          <div class="lang-tabs" role="group" aria-label="CV language">
+            <button class="lang-tab active" id="tab-en" onclick="switchLang('en')">EN</button>
+            <button class="lang-tab"        id="tab-de" onclick="switchLang('de')">DE</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-body">
+        <div class="cv-layout">
+
+          <!-- CV preview -->
+          <div>
+            <div class="cv-preview" id="cv-preview" aria-live="polite">
+              <p style="color:var(--color-ink-3); font-size:var(--text-sm);">Loading cv.md…</p>
+            </div>
+          </div>
+
+          <!-- Actions panel -->
+          <aside class="actions-panel">
+
+            <!-- English CV -->
+            <div class="action-card" id="card-en">
+              <div class="action-card-title">English CV</div>
+              <div class="action-card-sub">Standard international format. HTML template with your current profile data.</div>
+              <div class="action-card-body">
+                <button class="btn btn-primary btn-sm" id="gen-en-btn" onclick="generateCV('en', 'standard')">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 2v9M4 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  Generate PDF
+                </button>
+              </div>
+            </div>
+
+            <!-- Lebenslauf -->
+            <div class="action-card" id="card-de">
+              <div class="action-card-title">Lebenslauf (DE)</div>
+              <div class="action-card-sub">Traditional German format with photo block, personal data, and Datum/Unterschrift.</div>
+              <div class="action-card-body">
+                <div>
+                  <div class="lang-toggle">
+                    <span>Layout</span>
+                  </div>
+                  <div class="toggle-group" role="group" aria-label="Lebenslauf layout">
+                    <button class="toggle-btn active" id="layout-modern"  onclick="setLayout('modern')">Modern</button>
+                    <button class="toggle-btn"         id="layout-classic" onclick="setLayout('classic')">Classic</button>
+                  </div>
+                </div>
+
+                <div class="deepl-status" id="deepl-status">
+                  <div class="status-dot missing" id="deepl-dot"></div>
+                  <span id="deepl-label">Checking DeepL key…</span>
+                </div>
+
+                <button class="btn btn-secondary btn-sm" id="translate-btn" onclick="translateCV()">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 4h7M5.5 2v2M7 4c0 3-2 5-4 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 13l3-7 3 7M9.5 11h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Translate with DeepL
+                </button>
+
+                <button class="btn btn-primary btn-sm" id="gen-de-btn" onclick="generateLebenslauf()">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 2v9M4 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  Generate Lebenslauf PDF
+                </button>
+              </div>
+            </div>
+
+            <!-- Edit -->
+            <div class="action-card">
+              <div class="action-card-title">Edit CV source</div>
+              <div class="action-card-sub">Changes saved to <code style="font-family:var(--font-mono);font-size:0.85em;background:var(--color-paper-2);padding:1px 4px;border-radius:3px;">cv.md</code>. Refresh to preview.</div>
+              <div class="action-card-body">
+                <a href="/api/open-cv" class="btn btn-ghost btn-sm" onclick="openCVEditor(event)">
+                  Open cv.md
+                </a>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentLang   = 'en';
+    let currentLayout = 'modern';
+    let cvEnContent   = '';
+    let cvDeContent   = '';
+
+    async function loadCV() {
+      try {
+        const [enRes, deRes, deeplRes] = await Promise.all([
+          fetch('/api/cv?lang=en'),
+          fetch('/api/cv?lang=de').catch(() => null),
+          fetch('/api/deepl-status').catch(() => null)
+        ]);
+
+        if (enRes.ok) {
+          cvEnContent = await enRes.text();
+          renderCV(cvEnContent);
+        }
+
+        if (deRes && deRes.ok) {
+          cvDeContent = await deRes.text();
+        }
+
+        if (deeplRes && deeplRes.ok) {
+          const d = await deeplRes.json();
+          const dot   = document.getElementById('deepl-dot');
+          const label = document.getElementById('deepl-label');
+          if (d.configured) {
+            dot.className = 'status-dot ok';
+            label.textContent = 'DeepL API key configured';
+          } else {
+            dot.className = 'status-dot missing';
+            label.textContent = 'Add DEEPL_API_KEY to .env';
+          }
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    function renderCV(markdown) {
+      document.getElementById('cv-preview').innerHTML = markdownToHtml(markdown || '*cv.md not found — complete setup first.*');
+    }
+
+    function switchLang(lang) {
+      currentLang = lang;
+      document.getElementById('tab-en').classList.toggle('active', lang === 'en');
+      document.getElementById('tab-de').classList.toggle('active', lang === 'de');
+
+      if (lang === 'en') {
+        renderCV(cvEnContent || '*cv.md not found.*');
+      } else {
+        renderCV(cvDeContent || '*cv.de.md not found — use "Translate with DeepL" to generate it.*');
+      }
+    }
+
+    function setLayout(layout) {
+      currentLayout = layout;
+      document.getElementById('layout-modern').classList.toggle('active',  layout === 'modern');
+      document.getElementById('layout-classic').classList.toggle('active', layout === 'classic');
+    }
+
+    async function generateCV(lang, template) {
+      const btn = document.getElementById('gen-en-btn');
+      btn.setAttribute('data-state', 'loading');
+      btn.disabled = true;
+      btn.textContent = 'Generating…';
+      try {
+        const res = await fetch('/api/generate-pdf', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ lang, template }) });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        btn.setAttribute('data-state', 'success');
+        btn.textContent = '✓ Saved to output/';
+        setTimeout(() => { btn.removeAttribute('data-state'); btn.disabled = false; btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 2v9M4 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Generate PDF'; }, 3000);
+      } catch {
+        btn.setAttribute('data-state', 'error');
+        btn.textContent = 'Failed';
+        setTimeout(() => { btn.removeAttribute('data-state'); btn.disabled = false; btn.textContent = 'Generate PDF'; }, 3000);
+      }
+    }
+
+    async function generateLebenslauf() {
+      const btn = document.getElementById('gen-de-btn');
+      btn.setAttribute('data-state', 'loading');
+      btn.disabled = true;
+      btn.textContent = 'Generating…';
+      try {
+        const res = await fetch('/api/generate-lebenslauf', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ template: currentLayout, lang: 'de' }) });
+        if (!res.ok) throw new Error();
+        btn.setAttribute('data-state', 'success');
+        btn.textContent = '✓ Saved to output/';
+        setTimeout(() => { btn.removeAttribute('data-state'); btn.disabled = false; btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 2v9M4 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Generate Lebenslauf PDF'; }, 3000);
+      } catch {
+        btn.setAttribute('data-state', 'error');
+        btn.textContent = 'Failed';
+        setTimeout(() => { btn.removeAttribute('data-state'); btn.disabled = false; btn.textContent = 'Generate Lebenslauf PDF'; }, 3000);
+      }
+    }
+
+    async function translateCV() {
+      const btn = document.getElementById('translate-btn');
+      btn.setAttribute('data-state', 'loading');
+      btn.disabled = true;
+      btn.textContent = 'Translating…';
+      try {
+        const res = await fetch('/api/translate-cv', { method: 'POST' });
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
+        cvDeContent = data.content || '';
+        btn.setAttribute('data-state', 'success');
+        btn.textContent = '✓ cv.de.md saved';
+        if (currentLang === 'de') renderCV(cvDeContent);
+        setTimeout(() => { btn.removeAttribute('data-state'); btn.disabled = false; btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 4h7M5.5 2v2M7 4c0 3-2 5-4 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 13l3-7 3 7M9.5 11h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Translate with DeepL'; }, 3000);
+      } catch (e) {
+        btn.setAttribute('data-state', 'error');
+        btn.textContent = e.message || 'Failed — check DEEPL_API_KEY';
+        setTimeout(() => { btn.removeAttribute('data-state'); btn.disabled = false; btn.textContent = 'Translate with DeepL'; }, 4000);
+      }
+    }
+
+    function openCVEditor(e) {
+      e.preventDefault();
+      fetch('/api/open-cv', { method: 'POST' }).catch(() => {});
+      alert('cv.md is in the project root — open it in your editor.');
+    }
+
+    function markdownToHtml(md) {
+      return md
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/^# (.+)$/gm,   '<h1>$1</h1>')
+        .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
+        .replace(/^### (.+)$/gm, '<h3>$3</h3>'.replace('$3','$1'))
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+        .replace(/`(.+?)`/g, '<code>$1</code>')
+        .replace(/^---$/gm, '<hr>')
+        .replace(/^- (.+)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+        .replace(/\n\n+/g, '</p><p>')
+        .replace(/^(?!<[h|u|l|h|p])(.+)$/gm, (m) => m.trim() ? m : '');
+    }
+
+    function openSidebar()  { document.querySelector('.sidebar').classList.add('is-open'); document.getElementById('sidebar-overlay').classList.add('is-open'); }
+    function closeSidebar() { document.querySelector('.sidebar').classList.remove('is-open'); document.getElementById('sidebar-overlay').classList.remove('is-open'); }
+
+    loadCV();
+  </script>
+</body>
+</html>

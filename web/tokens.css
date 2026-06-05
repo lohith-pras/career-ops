@@ -1,0 +1,83 @@
+/* Hallmark · genre: modern-minimal · macrostructure: Narrative Workflow · theme: Cobalt
+ * nav: N3 side-rail · enrichment: none · tone: utilitarian · P5 H5 E5 S5 R5 V4 */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Paper */
+  --color-paper:         oklch(99.2% 0.003 250);
+  --color-paper-2:       oklch(96.5% 0.006 250);
+  --color-paper-3:       oklch(93.0% 0.009 250);
+
+  /* Ink */
+  --color-ink:           oklch(14.0% 0.012 250);
+  --color-ink-2:         oklch(44.0% 0.015 250);
+  --color-ink-3:         oklch(65.0% 0.010 250);
+
+  /* Accent */
+  --color-accent:        oklch(52.0% 0.220 260);
+  --color-accent-hover:  oklch(46.0% 0.220 260);
+  --color-accent-subtle: oklch(95.0% 0.040 260);
+
+  /* Semantic */
+  --color-success:       oklch(56.0% 0.160 145);
+  --color-success-bg:    oklch(96.0% 0.040 145);
+  --color-warn:          oklch(58.0% 0.140  75);
+  --color-warn-bg:       oklch(97.0% 0.040  75);
+  --color-danger:        oklch(54.0% 0.170  25);
+  --color-danger-bg:     oklch(97.0% 0.040  25);
+
+  /* Borders */
+  --color-border:        oklch(88.0% 0.007 250);
+  --color-border-strong: oklch(76.0% 0.012 250);
+  --color-focus:         oklch(52.0% 0.220 260);
+
+  /* Dark surface (output pane) */
+  --color-dark-bg:       oklch(14.0% 0.012 250);
+  --color-dark-text:     oklch(88.0% 0.008 250);
+
+  /* Fonts */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Cascadia Code', monospace;
+
+  /* Type scale */
+  --text-xs:      0.75rem;
+  --text-sm:      0.875rem;
+  --text-base:    1rem;
+  --text-lg:      1.125rem;
+  --text-xl:      1.25rem;
+  --text-2xl:     1.5rem;
+  --text-3xl:     1.875rem;
+  --text-display: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+
+  /* Spacing — 4pt scale */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Radii */
+  --radius-sm:   3px;
+  --radius-md:   6px;
+  --radius-lg:   10px;
+  --radius-pill: 9999px;
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:    120ms;
+  --dur-base:    200ms;
+  --dur-slow:    350ms;
+
+  /* Layout */
+  --sidebar-w: 220px;
+  --topbar-h:  52px;
+}

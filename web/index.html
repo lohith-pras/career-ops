@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — career-ops</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <nav class="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-mark" aria-hidden="true">co</div>
+        <div>
+          <div class="sidebar-brand-name">career-ops</div>
+          <div class="sidebar-brand-version" id="version-display"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-nav">
+        <a href="index.html" class="nav-item" aria-current="page">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+          Dashboard
+        </a>
+        <a href="evaluate.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 8l2 2 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Evaluate
+        </a>
+        <a href="reports.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 2h7l3 3v9H3V2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 2v3h3" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Reports
+        </a>
+        <a href="cv.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="1" width="12" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 5h6M5 8h6M5 11h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          CV &amp; Lebenslauf
+        </a>
+
+        <div class="nav-section-label">Tools</div>
+
+        <a href="setup.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Settings
+        </a>
+      </div>
+
+      <div class="sidebar-footer">
+        <p class="sidebar-footer-text">Paste a URL in Evaluate<br>to score a job posting.</p>
+      </div>
+    </nav>
+
+    <!-- Overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- Main -->
+    <div class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="sidebar-toggle" onclick="openSidebar()" aria-label="Open navigation">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <span class="topbar-title">Dashboard</span>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-ghost btn-sm" id="scan-btn" onclick="runScan()">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14 8A6 6 0 1 1 8 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 2l3 0 0 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Scan portals
+          </button>
+          <a href="evaluate.html" class="btn btn-primary btn-sm">
+            + Evaluate role
+          </a>
+        </div>
+      </header>
+
+      <div class="page-body">
+
+        <!-- Stats strip -->
+        <div class="stat-strip" id="stat-strip">
+          <div class="stat-item">
+            <div class="stat-value" id="stat-total">—</div>
+            <div class="stat-label">Evaluated</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="stat-applied">—</div>
+            <div class="stat-label">Applied</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="stat-interview">—</div>
+            <div class="stat-label">Interviews</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="stat-avg">—</div>
+            <div class="stat-label">Avg score</div>
+          </div>
+        </div>
+
+        <!-- Scan notice -->
+        <div class="alert alert-info" id="scan-alert" style="display:none; margin-bottom:var(--space-6);">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v5M8 5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span id="scan-alert-text"></span>
+        </div>
+
+        <!-- Pipeline table -->
+        <div class="table-toolbar">
+          <div class="section-head" style="margin:0;">
+            <div class="section-head-title" style="font-size:var(--text-lg);">Applications</div>
+          </div>
+          <div style="display:flex; gap:var(--space-2); align-items:center;">
+            <select class="form-input" id="status-filter" style="width:auto; cursor:pointer; font-size:var(--text-xs); padding:var(--space-2) var(--space-3);" onchange="filterTable()">
+              <option value="">All statuses</option>
+              <option value="Evaluated">Evaluated</option>
+              <option value="Applied">Applied</option>
+              <option value="Interview">Interview</option>
+              <option value="Offer">Offer</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Discarded">Discarded</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table id="apps-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Score</th>
+                <th>Status</th>
+                <th>PDF</th>
+                <th>Report</th>
+              </tr>
+            </thead>
+            <tbody id="apps-tbody">
+              <tr>
+                <td colspan="8">
+                  <div class="empty-state">
+                    <div class="empty-state-title">No applications yet</div>
+                    <div class="empty-state-sub">Paste a job URL in Evaluate to get started.</div>
+                    <a href="evaluate.html" class="btn btn-primary btn-sm">Evaluate your first role →</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allApps = [];
+
+    async function loadDashboard() {
+      try {
+        const [appsRes, versionRes] = await Promise.all([
+          fetch('/api/applications'),
+          fetch('/api/version').catch(() => null)
+        ]);
+
+        if (versionRes) {
+          const v = await versionRes.json().catch(() => null);
+          if (v?.version) document.getElementById('version-display').textContent = 'v' + v.version;
+        }
+
+        if (!appsRes.ok) return;
+        allApps = await appsRes.json();
+        renderStats(allApps);
+        renderTable(allApps);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderStats(apps) {
+      const evaluated = apps.length;
+      const applied   = apps.filter(a => ['Applied','Interview','Offer'].includes(a.status)).length;
+      const interview = apps.filter(a => a.status === 'Interview' || a.status === 'Offer').length;
+      const scores    = apps.map(a => parseFloat(a.score)).filter(s => !isNaN(s));
+      const avg       = scores.length ? (scores.reduce((s,v) => s+v, 0) / scores.length).toFixed(1) : '—';
+
+      document.getElementById('stat-total').textContent     = evaluated || '—';
+      document.getElementById('stat-applied').textContent   = applied || '—';
+      document.getElementById('stat-interview').textContent = interview || '—';
+      document.getElementById('stat-avg').textContent       = avg;
+    }
+
+    function renderTable(apps) {
+      const tbody = document.getElementById('apps-tbody');
+      if (!apps.length) {
+        tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">
+          <div class="empty-state-title">No applications yet</div>
+          <div class="empty-state-sub">Paste a job URL in Evaluate to get started.</div>
+          <a href="evaluate.html" class="btn btn-primary btn-sm">Evaluate your first role →</a>
+        </div></td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = apps.map(app => {
+        const score = parseFloat(app.score);
+        const scoreClass = score >= 4.0 ? 'badge-high' : score >= 3.0 ? 'badge-mid' : 'badge-low';
+        const statusClass = 'badge-' + (app.status || 'evaluated').toLowerCase();
+        const pdfMark = app.pdf === '✅' ? '<span style="color:var(--color-success)">✅</span>' : '<span style="color:var(--color-ink-3)">—</span>';
+
+        return `<tr data-status="${app.status || ''}">
+          <td class="td-mono">${app.num || ''}</td>
+          <td class="td-muted">${app.date || ''}</td>
+          <td><strong style="font-weight:500">${esc(app.company || '')}</strong></td>
+          <td style="max-width:240px;">${esc(app.role || '')}</td>
+          <td>${app.score ? `<span class="badge ${scoreClass}">${app.score}</span>` : '—'}</td>
+          <td><span class="badge ${statusClass}">${esc(app.status || 'Evaluated')}</span></td>
+          <td>${pdfMark}</td>
+          <td>${app.report_path ? `<a href="/api/report?path=${encodeURIComponent(app.report_path)}" class="td-link" target="_blank">View →</a>` : '—'}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function filterTable() {
+      const status = document.getElementById('status-filter').value;
+      const filtered = status ? allApps.filter(a => a.status === status) : allApps;
+      renderTable(filtered);
+    }
+
+    async function runScan() {
+      const btn = document.getElementById('scan-btn');
+      const alert = document.getElementById('scan-alert');
+      const alertText = document.getElementById('scan-alert-text');
+
+      btn.setAttribute('data-state', 'loading');
+      btn.disabled = true;
+      alert.style.display = 'flex';
+      alertText.textContent = 'Scanning portals… this may take a moment.';
+
+      try {
+        const res = await fetch('/api/scan', { method: 'POST' });
+        const data = await res.json();
+        alertText.textContent = data.message || 'Scan complete.';
+        btn.removeAttribute('data-state');
+        btn.disabled = false;
+        loadDashboard();
+      } catch (e) {
+        alertText.textContent = 'Scan failed. Check the terminal for details.';
+        btn.removeAttribute('data-state');
+        btn.disabled = false;
+      }
+    }
+
+    function esc(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function openSidebar()  { document.querySelector('.sidebar').classList.add('is-open'); document.getElementById('sidebar-overlay').classList.add('is-open'); }
+    function closeSidebar() { document.querySelector('.sidebar').classList.remove('is-open'); document.getElementById('sidebar-overlay').classList.remove('is-open'); }
+
+    loadDashboard();
+  </script>
+</body>
+</html>
