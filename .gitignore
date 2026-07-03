@@ -48,3 +48,7 @@ bun.lock
 .claude/memory/
 career-dashboard
 package-lock.json
+.gstack/
+temp/
+temp_*.html
+temp_*.txt
