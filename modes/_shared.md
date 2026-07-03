@@ -37,6 +37,11 @@ The evaluation uses 6 blocks (A-F) with a global score of 1-5:
 | Red flags | Blockers, warnings (negative adjustments) |
 | **Global** | Weighted average of above |
 
+**User overrides:** `modes/_profile.md` may re-weight these dimensions, de-emphasize
+components (e.g. ignore equity in Comp), or ADD dimensions (e.g. a "German Market Fit"
+gate covering work eligibility and visa). When `_profile.md` defines such rules, apply
+them — they override the defaults here. Report any user-added dimension as its own line.
+
 **Score interpretation:**
 - 4.5+ → Strong match, recommend applying immediately
 - 4.0-4.4 → Good match, worth applying
@@ -83,6 +88,10 @@ Classify every offer into one of these types (or hybrid of 2):
 | AI Solutions Architect | "architecture", "enterprise", "integration", "design", "systems" |
 | AI Forward Deployed | "client-facing", "deploy", "prototype", "fast delivery", "field" |
 | AI Transformation | "change management", "adoption", "enablement", "transformation" |
+
+**User extensions:** `modes/_profile.md` may define ADDITIONAL archetypes under a
+`## Archetype Extensions` section. Treat those as part of the classification set above —
+classify into a default archetype OR a user-defined one, whichever fits the JD best.
 
 After detecting archetype, read `modes/_profile.md` for the user's specific framing and proof points for that archetype.
 

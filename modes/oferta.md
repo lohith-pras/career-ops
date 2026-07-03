@@ -4,7 +4,7 @@ When the candidate pastes a job (text or URL), ALWAYS deliver the 7 blocks (A-F 
 
 ## Step 0 — Archetype Detection
 
-Classify the job into one of the 6 archetypes (see `_shared.md`). If it is a hybrid, indicate the 2 closest ones. This determines:
+Classify the job into one archetype from `_shared.md` **or any user-defined archetype in `modes/_profile.md` (`## Archetype Extensions`)** — whichever fits the JD best. If it is a hybrid, indicate the 2 closest ones. This determines:
 - Which proof points to prioritize in block B
 - How to rewrite the summary in block E
 - Which STAR stories to prepare in block F
@@ -52,6 +52,20 @@ Use WebSearch for:
 - Demand trend for the role
 
 Table with data and cited sources. If there is no data, state it instead of inventing.
+
+**Comp scoring respects `_profile.md` overrides** — e.g. if the profile says to de-prioritize
+equity, score Comp on cash only and fold equity into notes, not the score.
+
+### Block D+ — German Market Fit (if `_profile.md` defines a Work-Eligibility Gate)
+
+When `modes/_profile.md` defines a German Market Fit / Work-Eligibility Gate, evaluate it as
+its own line and apply any score caps it specifies:
+- **Hours** — Werkstudent ≤ 20 hrs/week during semester (or break/mandatory-internship exemption)
+- **Contract type** — Werkstudent / Praktikum / working-student vs full-time permanent
+- **Visa / sponsorship** — student permit sufficient, or does the role demand an existing EU work permit?
+- **German level** — workable in English / required German level vs the candidate's level
+
+Report a one-line verdict (Pass / Capped) and the reason. A failed gate caps the global score per `_profile.md`.
 
 ## Block E — Customization Plan
 
