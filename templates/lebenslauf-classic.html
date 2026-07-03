@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{NAME}} — Lebenslauf</title>
+<style>
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: url('./fonts/space-grotesk-latin.woff2') format('woff2');
+    font-weight: 300 700; font-style: normal; font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: url('./fonts/space-grotesk-latin-ext.woff2') format('woff2');
+    font-weight: 300 700; font-style: normal; font-display: swap;
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'DM Sans';
+    src: url('./fonts/dm-sans-latin.woff2') format('woff2');
+    font-weight: 100 1000; font-style: normal; font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'DM Sans';
+    src: url('./fonts/dm-sans-latin-ext.woff2') format('woff2');
+    font-weight: 100 1000; font-style: normal; font-display: swap;
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; line-height: 1.55; color: #1c1c1c; background: #fff;
+  }
+  .page { padding: 4px 0; }
+
+  /* Header: title left, photo right */
+  .header { display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 2px solid #1c1c1c; padding-bottom: 12px; margin-bottom: 16px; }
+  .header .title h1 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700;
+    letter-spacing: 0.5px; color: #1c1c1c; }
+  .header .title .subtitle {
+    text-transform: uppercase; letter-spacing: 3px; font-size: 11px;
+    color: #555; margin-top: 4px; }
+  .header .photo {
+    width: 105px; height: 135px; object-fit: cover; border: 1px solid #999; margin-left: 18px; }
+
+  /* Personal data table */
+  .pd-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+  .pd-table td { padding: 2.5px 0; vertical-align: top; }
+  .pd-table .pd-label {
+    width: 150px; font-weight: 700; color: #1c1c1c; text-transform: uppercase;
+    font-size: 9.5px; letter-spacing: 0.5px; }
+  .pd-table a { color: #1c1c1c; text-decoration: none; }
+
+  h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; color: #1c1c1c;
+    border-bottom: 1px solid #bbb; padding-bottom: 3px; margin: 16px 0 8px; }
+  h3 { font-size: 11.5px; font-weight: 700; margin-top: 9px; }
+  p { margin: 4px 0; }
+  ul { margin: 5px 0 5px 18px; }
+  li { margin-bottom: 3px; }
+  a { color: #1c1c1c; }
+  hr { display: none; }
+
+  .signature { margin-top: 30px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 10.5px; }
+  .signature .ort-datum { color: #333; }
+  .signature .sig-line { border-top: 1px solid #1c1c1c; width: 220px; text-align: center; padding-top: 4px; color: #555; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="title">
+        <h1>{{NAME}}</h1>
+        <div class="subtitle">Lebenslauf</div>
+      </div>
+      {{PHOTO_BLOCK}}
+    </div>
+
+    <table class="pd-table">
+      <tr><td class="pd-label">Kontakt</td><td>{{CONTACT_INLINE}}</td></tr>
+      {{PERSONAL_DATA}}
+    </table>
+
+    {{BODY}}
+
+    <div class="signature">
+      <div class="ort-datum">{{SIGNATURE}}</div>
+      <div class="sig-line">Unterschrift</div>
+    </div>
+  </div>
+</body>
+</html>

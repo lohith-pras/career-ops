@@ -18,11 +18,9 @@
 | cv.md | `cv.md` (Projekt-Root) | IMMER |
 | article-digest.md | `article-digest.md` (falls vorhanden) | IMMER (detaillierte Proof Points) |
 | profile.yml | `config/profile.yml` | IMMER (Identität und Zielrollen) |
-| _profile.md | `modes/_profile.md` | IMMER (Nutzer-Archetypen, Narrativ, Verhandlung, Scoring-Overrides) |
 
 **REGEL: Niemals Kennzahlen aus Proof Points hartcodieren.** Lies sie zur Bewertungszeit aus `cv.md` und `article-digest.md`.
 **REGEL: Bei Kennzahlen zu Artikeln/Projekten hat `article-digest.md` Vorrang vor `cv.md`** (in `cv.md` können ältere Zahlen stehen).
-**REGEL: Lies `modes/_profile.md` NACH dieser Datei. Nutzer-Anpassungen in `_profile.md` (Archetypen, Framing, Scoring-Overrides, Visa-/Arbeitsberechtigungs-Gate) haben Vorrang vor den Standardwerten hier.** `_profile.md` ist auf Englisch geschrieben, gilt aber für alle Sprachmodi.
 
 ---
 
